@@ -17,7 +17,7 @@ module.exports = {
     proxy: {
       "/api": {
         //后端的访问地址
-        target: "http://127.0.0.1:8090/",
+        target: "http://127.0.0.1:8080/",
         changeOrigin: true,
         pathRewrite: {
           "^/api": "/"

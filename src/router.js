@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Login from './views/login/Login.vue'
+import Registe from './views/registe/Registe.vue'
 import Index from './views/Index.vue'
 import Home from './views/home/Home.vue'
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/registe',
+      name: 'registe',
+      component: Registe
     },
     {
       path: '/index',

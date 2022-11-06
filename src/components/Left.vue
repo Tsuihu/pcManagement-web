@@ -7,7 +7,7 @@
         text-color="#303133">
         <router-link to="/home">
           <el-menu-item index="0">
-            <i class="fa fa-square"></i>
+            <i class="fa fa-th-large"></i>
             <span>首页</span>
           </el-menu-item>
         </router-link>
@@ -20,19 +20,25 @@
         <router-link to="/home">
           <el-menu-item index="2">
             <i class="fa fa-heartbeat"></i>
-            <span>核算记录</span>
+            <span>核算结果</span>
           </el-menu-item>
         </router-link>
         <router-link to="/home">
           <el-menu-item index="3">
-            <i class="fa fa fa-bell"></i>
-            <span>公告信息</span>
+            <i class="fa fa-bar-chart"></i>
+            <span>试管管理</span>
           </el-menu-item>
         </router-link>
         <router-link to="/home">
           <el-menu-item index="4">
-            <i class="fa 	fa fa-address-card"></i>
-            <span>个人信息</span>
+            <i class="fa fa-address-card"></i>
+            <span>人员信息</span>
+          </el-menu-item>
+        </router-link>
+        <router-link to="/home">
+          <el-menu-item index="5">
+            <i class="fa fa-user-circle-o"></i>
+            <span>系统用户</span>
           </el-menu-item>
         </router-link>
 

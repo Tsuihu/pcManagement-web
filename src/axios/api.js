@@ -11,41 +11,21 @@ axios.defaults.headers = {
 
 function callback(res, resolve, loadingInstance) {
   loadingInstance.close();
-  if (res.data.code == 100) {
-    //SUCCESS_NO_MSG
-    // Message.success({
-    //   message: res.data.msg,
-    // });
-  }
   if (res.data.code == 200) {
     //SUCCESS_MSG
     Message.success({
-      message: res.data.msg
+      message: res.data.errMsg
     });
-  }
-  if (res.data.code == 300) {
-    //SUCCESS_MSG
-    MessageBox.alert(res.data.msg, '登录超时', {
-      confirmButtonText: '确定',
-      callback: action => {
-        router.push("/login")
-      }
-    }); 
-  }
-  if (res.data.code == 400) {
-    //WARNING
-    Message.warning({
-      message: res.data.msg
-    });
-  }
-  if (res.data.code == 401) {
-    //CONFIRM
-    //不做处理，由业务模块处理
   }
   if (res.data.code == 500) {
-    //ERROR
-    Message.error({
-      message: res.data.msg
+    Message.warning({
+      message: res.data.errMsg
+    });
+  }
+  if (res.data.code == 101) {
+    //WARNING
+    Message.warning({
+      message: res.data.errMsg
     });
   }
   resolve(res.data);

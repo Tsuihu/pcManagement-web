@@ -2,19 +2,19 @@
   <div class="login">
     <section class="form_container">
       <div class="manage_tip">
-        <span class="title">资金后台管理系统</span>
         <el-form :model="loginUser" :rules="rules" ref="loginFrom" label-width="60px" class="loginFrom">
-          <el-form-item label="邮箱" prop="email">
-            <el-input type="text" v-model="loginUser.email" placeholder="请输入email"></el-input>
+          <h1>核酸检测管理系统</h1>
+          <el-form-item label="电话" prop="tel">
+            <el-input type="tel" v-model="loginUser.tel" placeholder="请输入电话"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="loginUser.password" placeholder="请输入用户名"></el-input>
+            <el-input type="password" v-model="loginUser.password" placeholder="请输入密码"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" class="submit_btn" @click="submitForm('loginFrom')">登录</el-button>
+            <el-button type="primary" class="submit_btn" @click="submitForm()">登录</el-button>
           </el-form-item>
           <div class="tiparea">
-            <p>还没有账号?现在 <router-link to='/register'>注册</router-link></p>
+            <p>还没有账号?现在 <router-link to='/registe'>注册</router-link></p>
           </div>
         </el-form>
       </div>
@@ -23,20 +23,26 @@
 </template>
 
 <script>
+import api from '../../axios/api'
 export default {
   name: 'login',
   components:{},
   data() {
     return {
       loginUser:{
-        email:'',
+        tel:'',
         password:''
       },
       rules:{
-        email:[{
-          type:'email',
+        tel:[{
           required:true,
-          message:'邮箱格式不正确',
+          message:'请输入正确手机号',
+          trigger:'blur'
+        },
+        {
+          min:11,
+          max:11,
+          message:'请输入正确手机号',
           trigger:'blur'
         }],
         password:[{
@@ -55,10 +61,14 @@ export default {
   },
   methods: {
     // 登录提交
-    submitForm(loginFrom){
-      
-    },
-   
+    submitForm(){
+        api.post('/manager/login.do',this.loginUser).then(res => {
+          if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+            sessionStorage.setItem('manager',res.data)
+            this.$router.push('/index')
+          }
+        })
+      }
   }
 }
 </script>
@@ -68,10 +78,10 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: skyblue;
-  /* background: url(../assets/bg.jpg) no-repeat center center; */
+  background-image: linear-gradient(skyblue,#bac);
   background-size: 100% 100%;
 }
+
 .form_container {
   width: 370px;
   height: 210px;
@@ -82,10 +92,10 @@ export default {
   border-radius: 5px;
   text-align: center;
 }
-.form_container .manage_tip {
+.manage_tip .manage_tip {
   font-family: "Microsoft YaHei";
   font-weight: bold;
-  font-size: 26px;
+  /* font-size: 26px; */
   color: #fff;
 }
 .loginFrom {

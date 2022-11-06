@@ -4,7 +4,7 @@ export default {
   urlPrefix: "/api",
   //返回代码常量，要和后台的常量定义保持一致
   RESULT_CODE: {
-    WARNING: 400, CONFIRM: 401, ERROR: 500, VALIDATE_FAILED: 501, NOT_LOGIN: 300
+    SUCCESS: 200, ERROR: 500, LOGIN_ERROR: 101,
   },
   utils: {
     nullToEmpty(obj) {
