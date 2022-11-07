@@ -11,7 +11,7 @@
             <span>首页</span>
           </el-menu-item>
         </router-link>
-        <router-link to="/home">
+        <router-link to="/pointlist">
           <el-menu-item index="1">
             <i class="fa fa-hospital-o"></i>
             <span>检测站点</span>
@@ -23,20 +23,26 @@
             <span>核算结果</span>
           </el-menu-item>
         </router-link>
-        <router-link to="/home">
+        <router-link to="/tubelist">
           <el-menu-item index="3">
             <i class="fa fa-bar-chart"></i>
             <span>试管管理</span>
           </el-menu-item>
         </router-link>
-        <router-link to="/home">
+        <router-link to="/boxlist">
           <el-menu-item index="4">
+            <i class="fa fa-bar-chart"></i>
+            <span>转运箱管理</span>
+          </el-menu-item>
+        </router-link>
+        <router-link to="/people">
+          <el-menu-item index="5">
             <i class="fa fa-address-card"></i>
             <span>人员信息</span>
           </el-menu-item>
         </router-link>
         <router-link to="/home">
-          <el-menu-item index="5">
+          <el-menu-item index="6">
             <i class="fa fa-user-circle-o"></i>
             <span>系统用户</span>
           </el-menu-item>

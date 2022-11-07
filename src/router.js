@@ -38,16 +38,26 @@ export default new Router({
           name: 'home',
           component: Home
         },
-        // {
-        //   path: '/info',
-        //   name: 'info',
-        //   component: Info
-        // },
-        // {
-        //   path: '/fundlist',
-        //   name: 'fundlist',
-        //   component: FundList
-        // }
+        {
+          path: '/pointlist',
+          name: 'pointlist',
+          component: () => import('./views/home/PointList.vue')
+        },
+        {
+          path: '/boxlist',
+          name: 'boxlist',
+          component: () => import('./views/home/BoxList.vue')
+        },
+        {
+          path: '/tubelist',
+          name: 'tubelist',
+          component: () => import('./views/home/TubeList.vue')
+        },
+        {
+          path: '/people',
+          name: 'people',
+          component: () => import('./views/home/People.vue')
+        },
       ]
     },
   ],

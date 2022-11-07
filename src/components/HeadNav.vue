@@ -7,20 +7,18 @@
       </el-col>
       <el-col :span="6" class="user">
         <div class="userinfo">
-          <!-- <img src="../assets/user.png" class="avatar" alt=""> -->
         </div>
         <div class="welcome">
-          <p class="name comename">欢迎</p>
-          <p class="name avatarname"></p>
+          <p class="name comename">欢迎，{{user}}</p>
         </div>
         <span class="username">
-          <el-dropdown trigger="click">
+          <el-dropdown @command="handleCommand" trigger="click">
             <span class="el-dropdown-link">
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="info">个人信息</el-dropdown-item>
-              <el-dropdown-item command="logout">退出</el-dropdown-item>
+              <el-dropdown-item command="1">个人信息</el-dropdown-item>
+              <el-dropdown-item command="2">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </span>
@@ -33,13 +31,22 @@
 export default {
   name: 'info',
   computed: {
-    // user(){
-    //   return this.$store.getters.user
-    // }
+    user(){
+      return JSON.parse(sessionStorage.getItem('manager')).name
+    }
   },
   methods: {
-    
-  },
+    // 下拉菜单方法
+    handleCommand(command) {
+      if(command == 1) {
+
+      }
+      if(command == 2) {
+        sessionStorage.removeItem('manager')
+        this.$router.push('/login')
+      }
+    },
+  }
 }
 </script>
 
@@ -111,6 +118,6 @@ export default {
   margin-right: 5px;
 }
 .el-dropdown {
-  color: #fff;
+  color: #000;
 }
 </style>

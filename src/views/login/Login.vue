@@ -63,8 +63,9 @@ export default {
     // 登录提交
     submitForm(){
         api.post('/manager/login.do',this.loginUser).then(res => {
+          // console.log(JSON.stringify(res.data))
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            sessionStorage.setItem('manager',res.data)
+            sessionStorage.setItem('manager',JSON.stringify(res.data))
             this.$router.push('/index')
           }
         })
