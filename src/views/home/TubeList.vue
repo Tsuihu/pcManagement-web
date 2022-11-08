@@ -184,8 +184,8 @@
           </el-form-item>
           <el-form-item prop="status" label="试管状态">
             <el-select v-model="EditFormData.status" placeholder="试管状态">
-              <el-option label="已开管" :value="0"></el-option>
-              <el-option label="已封管" :value="1"></el-option>
+              <el-option label="开管" :value="0"></el-option>
+              <el-option label="封管" :value="1"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item prop="testResult" label="结果">
@@ -290,6 +290,7 @@ export default {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           console.log(res)
           this.editDialog.show = false
+          this.getTubeList()
         }
       })
     },
