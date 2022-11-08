@@ -75,7 +75,12 @@
           width="100"
           align="center">
             <template slot-scope="scope">
-              {{scope.row.testResult == 0 ? '阴性' : '阳性'}}
+              <el-tag v-if="scope.row.status == 0" type="warning" size="small">
+                {{scope.row.status == 0 ? '阴性' : '阳性'}}
+              </el-tag>
+              <el-tag v-if="scope.row.status != 0"  size="small">
+                {{scope.row.status == 0 ? '阴性' : '阳性'}}
+              </el-tag>
             </template>
         </el-table-column>
         <el-table-column

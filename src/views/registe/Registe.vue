@@ -80,8 +80,8 @@ export default {
           trigger:'blur'
         },
         {
-          min:14,  // 最小长度
-          max:14, // 最大长度
+          min:18,  // 最小长度
+          max:18, // 最大长度
           message:'身份证格式不正确',
           trigger:'blur'
         }],
