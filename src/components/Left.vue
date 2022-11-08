@@ -41,25 +41,30 @@
             <span>人员信息</span>
           </el-menu-item>
         </router-link>
-        <router-link to="/home">
-          <el-menu-item index="6">
+
+          <!-- <el-menu-item index="6">
             <i class="fa fa-user-circle-o"></i>
             <span>系统用户</span>
-          </el-menu-item>
-        </router-link>
+          </el-menu-item> -->
 
-        <!-- <template v-for="item in items">
-          <el-submenu v-if="item.children" :index="item.path" :key="item.path">
-            <template slot="title">
-              <span slot="title">{{item.name}}</span>
+        <template>
+          <el-submenu index="6">
+            <template #title>
+              <i class="fa fa-address-card"></i>
+              <span slot="title">系统用户</span>
             </template>
-            <router-link v-for="(citem,cindex) in item.children" :to="citem.path" :key="cindex">
-              <el-menu-item :index="citem.path">
-                <span slot="title">{{citem.name}}</span>
+            <router-link to="/home">
+              <el-menu-item index="6-1">
+                <span slot="title">采集人员</span>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/home">
+              <el-menu-item index="6-2">
+                <span slot="title">管理员</span>
               </el-menu-item>
             </router-link>
           </el-submenu>
-        </template> -->
+        </template>
 
       </el-menu>
     </el-col>
@@ -69,24 +74,6 @@
 <script>
 export default {
   name: 'left',
-  data() {
-    return {
-      items:[
-        {
-          icon: 'fa-money',
-          name: '核算结果',
-          path: 'fund',
-          children: [{path: 'fundlist',name: '资金流水'}]
-        },
-        {
-          icon: 'fa-asterisk',
-          name: '人员信息',
-          path: 'info',
-          children: [{path: '/info', name: '个人信息'}]
-        }
-      ]
-    }
-  },
 }
 </script>
 
@@ -102,9 +89,6 @@ export default {
 .el-menu {
   border: none;
 }
-.fa-margin {
-  margin-right: 5px;
-}
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 180px;
   min-height: 400px;
@@ -116,14 +100,17 @@ export default {
   font-size: 15px;
   min-width: 180px;
 }
+.el-submenu .el-menu-item {
+  font-size: 15px;
+  min-width: 180px;
+}
 .el-menu-item i {
   margin-right: 10px;
   color: #000;
 }
-
-.hiddenDropdown,
-.hiddenDropname {
-  display: none;
+.el-submenu i {
+  margin-right: 10px;
+  color: #000;
 }
 a {
   text-decoration: none;

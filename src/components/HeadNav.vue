@@ -9,7 +9,7 @@
         <div class="userinfo">
         </div>
         <div class="welcome">
-          <!-- <p class="name comename">欢迎，{{user}}</p> -->
+          <p class="name comename">欢迎，{{user}}</p>
         </div>
         <span class="username">
           <el-dropdown @command="handleCommand" trigger="click">

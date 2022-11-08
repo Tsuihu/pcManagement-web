@@ -57,9 +57,10 @@
           width="100"
           align="center">
             <template slot-scope="scope">
-              <el-tag size="small">
+              <!-- <el-tag size="small">
                 {{scope.row.status == 0 ? '已开管' : '已封管'}}
-              </el-tag>
+              </el-tag> -->
+              {{scope.row.status == 0 ? '已开管√' : '已封管×'}}
             </template>
         </el-table-column>
         <el-table-column
@@ -75,11 +76,12 @@
           width="100"
           align="center">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.status == 0" type="warning" size="small">
-                {{scope.row.status == 0 ? '阴性' : '阳性'}}
+              <!-- {{scope.row.testResult == 0 ? '阴性' : '阳性'}} -->
+              <el-tag v-if="scope.row.testResult == 0" size="small">
+                阴性
               </el-tag>
-              <el-tag v-if="scope.row.status != 0"  size="small">
-                {{scope.row.status == 0 ? '阴性' : '阳性'}}
+              <el-tag v-if="scope.row.testResult != 0" type="warning"  size="small">
+                阳性
               </el-tag>
             </template>
         </el-table-column>
@@ -262,7 +264,7 @@ export default {
       api.post('/testtube/getPage.do',pages).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           this.tableData = res.data.data
-          // console.log(res)
+          console.log(res)
           this.paginations.total = res.data.count
         }
       })
@@ -293,7 +295,7 @@ export default {
       console.log(this.EditFormData)
       api.post('/testtube/updateTestTube.do',this.EditFormData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res)
+          // console.log(res)
           this.editDialog.show = false
           this.getTubeList()
         }
