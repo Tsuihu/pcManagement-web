@@ -1,6 +1,14 @@
 <template>
   <div class="pointlist">
     <el-tag>位置 <i class="el-icon-arrow-right"></i> 检测站点</el-tag>
+    <!-- 添加 -->
+    <el-button 
+      class="btnRight"
+      type="primary" 
+      size="small" 
+      icon="view" 
+      @click="handleAdd()">添加</el-button>
+    <!-- 信息列表 -->
     <div class="table_container">
       <el-table
         :data="tableData"
@@ -56,36 +64,41 @@
           </el-pagination>
         </div>
     </el-row>
+    <PointAdd 
+      :dialog="dialog" 
+      :formData="formData"
+      @update="getAllPoint" />
 
   </div>
 </template>
 
 <script>
 import api from '../../axios/api'
+import PointAdd from '../../components/PointAdd.vue'
 export default {  
   name: 'pointlist',
+  components: {
+    PointAdd
+  },
   data() {
     return {
       tableData: [],
-      allTableData: [
-        // {name: '洛阳理工学院(开元校区)'},
-        // {name: '洛阳理工学院(王城校区)'},
-        // {name: '洛阳师范大学'},
-        // {name: '河南科技大学(开元校区)'},
-        // {name: '河南科技大学(开元校区)'},
-        // {name: '河南科技大学(开元校区)'},
-        // {name: '河南科技大学(开元校区)'},
-        // {name: '河南科技大学(开元校区)'},
-        // {name: '河南科技大学(开元校区)'},
-        // {name: '河南科技大学(开元校区)'},
-      ],
-      newTable: [],
+      allTableData: [],
       paginations: {
         pageIndex: 1,  // 当前位于那一页
         total: 0, // 总数
         pageSize: 5,  // 一页显示多少条
         page_sizes: [5,10,15,20],  // 每页显示多少条
         layout: 'total,sizes,prev,pager,next,jumper'  // 翻页属性
+      },
+      dialog: {
+        title: '',
+        show: false,
+        option: ''
+      },
+      formData: {
+        pointId: '',
+        pointName: ''
       },
     }
   },
@@ -97,16 +110,37 @@ export default {
         pageSize: this.paginations.pageSize
       }
       api.post('/point/getPage.do',pages).then(res => {
-          if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            this.tableData = res.data.data
-            this.paginations.total = res.data.count
-          }
-        })
+        if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+          this.tableData = res.data.data
+          this.paginations.total = res.data.count
+        }
+      })
+    },
+    // 添加
+    handleAdd() {
+      this.dialog = {
+        title: '添加检测站点名称',
+        show: true,
+        option: 'addPoint.do'
+      }
     },
     // 编辑
-    handleEdit() {},
+    handleEdit(index,row) {
+      this.dialog = {
+        title: '修改检测站点名称',
+        show: true,
+        option: 'updatePoint.do'
+      },
+      this.formData.pointId = row.pointId
+    },
     // 删除
-    handleDelete() {},
+    handleDelete(index,row) {
+      api.post(`/point/deletePoint.do?pointId=${row.pointId}`).then(res => {
+        if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+          this.getAllPoint()
+        }
+      })
+    },
     // 设置一页展示多少条数据
     handleSizeChange(pageSize) {
       this.paginations.pageSize = pageSize
@@ -159,10 +193,16 @@ export default {
   padding: 16px;
 }
 .table_container {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .pagination {
   float: right;
-  margin-top: 10px;
+  margin-top: 5px;
+}
+.add_data {
+  margin-top: 5px;
+}
+.btnRight {
+  float: right;
 }
 </style>
