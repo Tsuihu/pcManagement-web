@@ -53,12 +53,12 @@
               <i class="fa fa-address-card"></i>
               <span slot="title">系统用户</span>
             </template>
-            <router-link to="/home">
+            <router-link to="/collectors">
               <el-menu-item index="6-1">
                 <span slot="title">采集人员</span>
               </el-menu-item>
             </router-link>
-            <router-link to="/home">
+            <router-link to="/managers">
               <el-menu-item index="6-2">
                 <span slot="title">管理员</span>
               </el-menu-item>

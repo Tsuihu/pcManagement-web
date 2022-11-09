@@ -155,7 +155,16 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="boxCode" label="所属转运箱编码">
-            <el-input type="text" v-model="addFormData.boxCode"></el-input>
+            <!-- <el-input type="text" v-model="addFormData.boxCode"></el-input> -->
+            <el-select v-model="boxList.boxCode"  placeholder="所属转运箱编码">
+              <el-option
+                v-for="(item,index) in boxList"
+                :key="index" 
+                :label="item.boxCode" 
+                :value="item.boxCode">
+                  {{item.boxCode}}
+                </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="dialog.show = false">取 消</el-button>
@@ -251,7 +260,8 @@ export default {
         status: '',
         testResult: '',
         testtubeId: ''
-      }
+      },
+      boxList: []
     }
   },
   methods: {
@@ -264,7 +274,7 @@ export default {
       api.post('/testtube/getPage.do',pages).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           this.tableData = res.data.data
-          console.log(res)
+          // console.log(res)
           this.paginations.total = res.data.count
         }
       })
@@ -274,6 +284,12 @@ export default {
     // 添加
     handleAdd() {
       this.dialog.show = true
+      api.post('/box/getAllBoxCode.do').then(res => {
+        if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+          console.log(res.data)
+          this.boxList = res.data
+        }
+      })
     },
     // 添加dialog
     addOnSubmit() {
@@ -281,7 +297,8 @@ export default {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           console.log(res)
           this.dialog.show = false
-          this.addFormData = ''
+          this.addFormData = {}
+          this.getTubeList()
         }
       })
     },
@@ -302,7 +319,17 @@ export default {
       })
     },
     // 删除
-    handleDelete(row) {},
+    handleDelete(index,row) {
+      console.log(row.testtubeId)
+      if(confirm('确认删除？')) {
+        api.post(`/testtube/deleteTube.do?testtubeId=${row.testtubeId}`).then(res => {
+          if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+            console.log(res)
+            this.getTubeList()
+          }
+        }) 
+      }
+    },
     // 设置一页展示多少条数据
     handleSizeChange(pageSize) {
       this.paginations.pageSize = pageSize

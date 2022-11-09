@@ -1,10 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Login from './views/login/Login.vue'
-import Registe from './views/registe/Registe.vue'
-import Index from './views/Index.vue'
-import Home from './views/home/Home.vue'
-
 
 Vue.use(Router);
 
@@ -17,17 +12,17 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: () => import('./views/login/Login.vue')
     },
     {
       path: '/registe',
       name: 'registe',
-      component: Registe
+      component: () => import('./views/registe/Registe.vue')
     },
     {
       path: '/index',
       // name: 'index',
-      component: Index,
+      component: () => import('./views/Index.vue'),
       children:[
         {
           path:'/',
@@ -36,7 +31,7 @@ export default new Router({
         {
           path: '/home',
           name: 'home',
-          component: Home
+          component: () => import('./views/home/Home.vue')
         },
         {
           path: '/pointlist',
@@ -57,6 +52,16 @@ export default new Router({
           path: '/people',
           name: 'people',
           component: () => import('./views/home/People.vue')
+        },
+        {
+          path: '/collectors',
+          name: 'collectors',
+          component: () => import('./views/home/Collectors.vue')
+        },
+        {
+          path: '/managers',
+          name: 'managers',
+          component: () => import('./views/home/Managers.vue')
         },
       ]
     },
