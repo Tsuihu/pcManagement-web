@@ -90,6 +90,7 @@
       :modal-append-to-body="false">
       <div class="form">
         <el-form
+          :rules="rules"
           :model="addFormData"
           label-width="120px"
           style="margin:10px;width=auto">
@@ -121,6 +122,7 @@
       :modal-append-to-body="false">
       <div class="form">
         <el-form
+          :rules="rules"
           :model="EditFormData"
           label-width="120px"
           style="margin:10px;width=auto">
@@ -186,6 +188,40 @@ export default {
         idcard: '',
         password: '',
         tel: '',
+      },
+      rules:{
+        tel:[{
+          required:true,
+          message:'手机号不能为空',
+          trigger:'blur'
+        },
+        {
+          min:11,
+          max:11,
+          message:'请输入11位手机号',
+          trigger:'blur'
+        }],
+        password:[{
+          required:true,
+          message:'密码不能为空',
+          trigger:'blur'
+        },
+        {
+          min:6,
+          message:'长度最小6位',
+          trigger:'blur'
+        }],
+        idcard:[{
+          required:true,
+          message:'身份证不能为空',
+          trigger:'blur'
+        },
+        {
+          min:18,
+          max:18,
+          message:'请输入18位身份证',
+          trigger:'blur'
+        }]
       }
     }
   },
