@@ -39,7 +39,7 @@ export default {
     // 下拉菜单方法
     handleCommand(command) {
       if(command == 1) {
-
+        this.$router.push('info')
       }
       if(command == 2) {
         sessionStorage.removeItem('manager')

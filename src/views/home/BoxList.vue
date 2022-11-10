@@ -2,31 +2,21 @@
   <div class="boxlist">
     <el-tag>位置 <i class="el-icon-arrow-right"></i> 转运箱列表</el-tag>
     <!-- 查询，添加 -->
-    <el-form :inline="true" class="add_data" ref="add_data" :model="search_data">
-      <!-- 筛选 -->
-      <el-form-item lable="按照时间筛选">
-        <el-date-picker
-          v-model="search_data.openTime"
-          type="datetime"
-          placeholder="选择开始时间">
-        </el-date-picker>
-          --
-        <el-date-picker
-          v-model="search_data.closeTime"
-          type="datetime"
-          placeholder="选择结束时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item>
+    <el-form :inline="true" class="add_data">
+      <!-- 查询 -->
+      <div class="searchLeft">
+        <el-input
+          placeholder="请输入试管编码"
+          prefix-icon="el-icon-search"
+          v-model="searchBoxCode"
+          @keydown.enter="btnSearch()">
+        </el-input>
         <el-button 
-          type="primary" 
-          size="small" 
-          icon="view" 
-          @click="handleSearch()">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" size="small" icon="search" @click="handleSearch()">筛选</el-button>
-      </el-form-item>
+            type="primary" 
+            size="small" 
+            icon="view" 
+            @click="btnSearch()">搜索</el-button>
+      </div>
       <el-form-item class="btnRight">
         <el-button 
           type="primary" 
@@ -133,7 +123,7 @@
           </el-form-item>
           <el-form-item prop="name" label="采集人员名字">
             <!-- <el-input type="text" v-model="addFormData.name"></el-input> -->
-            <el-select v-model="collectors.name"  placeholder="采集人员名字">
+            <el-select v-model="addFormData.name"  placeholder="采集人员名字">
               <el-option
                 v-for="(item,index) in collectors"
                 :key="index" 
@@ -157,7 +147,7 @@
           </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="dialog.show = false">取 消</el-button>
-            <el-button type="text" @click='addOnSubmit()'>提  交</el-button>
+            <el-button type="primary" @click='addOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -211,11 +201,10 @@ export default {
   name: 'boxlist',
   data() {
     return {
-      search_data: {
-        openTime: '',
-        closeTime: ''
-      },
+      searchBoxCode: '',
       tableData: [],
+      // 容器
+      allTableData: [],
       paginations: {
         pageIndex: 1,  // 当前位于那一页
         total: 0, // 总数
@@ -257,14 +246,30 @@ export default {
       }
       api.post('/box/getPageBox.do',pages).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          this.tableData = res.data.data
+          // this.tableData = res.data.data
+          // this.paginations.total = res.data.count
           // console.log(res)
+          this.allTableData = res.data.data
           this.paginations.total = res.data.count
+          this.setPaginations()
         }
       })
     },
-    // 筛选
-    handleSearch() {},
+    // 搜索
+    btnSearch() {
+      console.log(this.searchBoxCode)
+      if(this.searchBoxCode) {
+        api.post(`/box/getLikeCode.do?boxCode=${this.searchBoxCode}`).then(res => {
+          if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+            this.tableData = res.data
+            console.log(res)
+          }
+        })
+        this.searchBoxCode = ''
+      }else {
+        this.$message('请输入箱子编码 ')
+      }
+    },
     // 添加
     handleAdd() {
       this.dialog.show = true
@@ -287,7 +292,7 @@ export default {
           console.log(res)
           this.dialog.show = false
           this.addFormData = {}
-          this.getBoxList()
+          // this.getBoxList()
         }
       })
     },
@@ -326,6 +331,16 @@ export default {
       this.paginations.pageIndex = page
       this.getBoxList()
     },
+    setPaginations(){
+      // 分页属性设置
+      // this.paginations.total = this.allTableData.count
+      this.paginations.page_index = 1
+      this.paginations.page_size = 5 
+      // 设置默认的分页数据
+      this.tableData = this.allTableData.filter((item,index) => {
+        return index < this.paginations.page_size
+      })
+    },
   },
   created() {
     this.getBoxList()
@@ -340,8 +355,18 @@ export default {
 .btnRight {
   float: right;
 }
+.searchLeft .el-input {
+  width: 300px;
+  float: left;
+}
+.searchLeft .el-button {
+  float: left;
+  margin-left: 10px;
+  margin-top: 3px;
+}
 .add_data {
   margin-top: 5px;
+  overflow: hidden;
 }
 .pagination {
   float: right;

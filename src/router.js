@@ -63,6 +63,11 @@ export default new Router({
           name: 'managers',
           component: () => import('./views/home/Managers.vue')
         },
+        {
+          path: '/info',
+          name: 'info',
+          component: () => import('./views/home/Info.vue')
+        },
       ]
     },
   ],

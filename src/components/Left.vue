@@ -17,12 +17,12 @@
             <span>检测站点</span>
           </el-menu-item>
         </router-link>
-        <router-link to="/home">
+        <!-- <router-link to="/home">
           <el-menu-item index="2">
             <i class="fa fa-heartbeat"></i>
             <span>核算结果</span>
           </el-menu-item>
-        </router-link>
+        </router-link> -->
         <router-link to="/tubelist">
           <el-menu-item index="3">
             <i class="fa fa-bar-chart"></i>

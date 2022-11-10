@@ -2,31 +2,21 @@
   <div class="tubelist">
     <el-tag>位置 <i class="el-icon-arrow-right"></i> 试管列表</el-tag>
     <!-- 查询，添加 -->
-    <el-form :inline="true" class="add_data" ref="add_data" :model="search_data">
-      <!-- 筛选 -->
-      <el-form-item lable="按照时间筛选">
-        <el-date-picker
-          v-model="search_data.openTime"
-          type="datetime"
-          placeholder="选择开始时间">
-        </el-date-picker>
-          --
-        <el-date-picker
-          v-model="search_data.closeTime"
-          type="datetime"
-          placeholder="选择结束时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item>
+    <el-form :inline="true" class="add_data">
+      <!-- 查询 -->
+      <div class="searchLeft">
+        <el-input
+          placeholder="请输入试管编码"
+          prefix-icon="el-icon-search"
+          v-model="searchTubeCode"
+          @keyup.enter="btnSearch()">
+        </el-input>
         <el-button 
-          type="primary" 
-          size="small" 
-          icon="view" 
-          @click="handleSearch()">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" size="small" icon="search" @click="handleSearch()">筛选</el-button>
-      </el-form-item>
+            type="primary" 
+            size="small" 
+            icon="view" 
+            @click="btnSearch()">搜索</el-button>
+      </div>
       <el-form-item class="btnRight">
         <el-button 
           type="primary" 
@@ -156,7 +146,7 @@
           </el-form-item>
           <el-form-item prop="boxCode" label="所属转运箱编码">
             <!-- <el-input type="text" v-model="addFormData.boxCode"></el-input> -->
-            <el-select v-model="boxList.boxCode"  placeholder="所属转运箱编码">
+            <el-select v-model="addFormData.boxCode"  placeholder="所属转运箱编码">
               <el-option
                 v-for="(item,index) in boxList"
                 :key="index" 
@@ -168,7 +158,7 @@
           </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="dialog.show = false">取 消</el-button>
-            <el-button type="text" @click='addOnSubmit()'>提  交</el-button>
+            <el-button type="primary" @click='addOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -212,7 +202,7 @@
           </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="editDialog.show = false">取 消</el-button>
-            <el-button type="text" @click='editOnSubmit()'>提  交</el-button>
+            <el-button type="primary" @click='editOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -226,11 +216,10 @@ export default {
   name: 'tubelist',
   data() {
     return {
-      search_data: {
-        openTime: '',
-        closeTime: ''
-      },
+      searchTubeCode: '',
       tableData: [],
+      // 容器
+      allTableData: [],
       paginations: {
         pageIndex: 1,  // 当前位于那一页
         total: 0, // 总数
@@ -273,20 +262,35 @@ export default {
       }
       api.post('/testtube/getPage.do',pages).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          this.tableData = res.data.data
-          // console.log(res)
+          // this.tableData = res.data.data
+          // this.paginations.total = res.data.count
+          this.allTableData = res.data.data
           this.paginations.total = res.data.count
+          this.setPaginations()
         }
       })
     },
-    // 筛选
-    handleSearch() {},
+    // 搜索
+    btnSearch() {
+      console.log(this.searchTubeCode)
+      if(this.searchBoxCode) {
+        api.post(`/testtube/getLikeCode.do?TesttubeCode=${this.searchTubeCode}`).then(res => {
+          if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+            console.log(res)
+          }
+        })
+        this.searchTubeCode = ''
+      }else {
+        this.$message('请输入箱子编码 ')
+      }
+      
+    },
     // 添加
     handleAdd() {
       this.dialog.show = true
       api.post('/box/getAllBoxCode.do').then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res.data)
+          // console.log(res.data)
           this.boxList = res.data
         }
       })
@@ -340,6 +344,16 @@ export default {
       this.paginations.pageIndex = page
       this.getTubeList()
     },
+    setPaginations(){
+      // 分页属性设置
+      // this.paginations.total = this.allTableData.count
+      this.paginations.page_index = 1
+      this.paginations.page_size = 5 
+      // 设置默认的分页数据
+      this.tableData = this.allTableData.filter((item,index) => {
+        return index < this.paginations.page_size
+      })
+    },
     // 格式化试管类型
     formatterStatus(row) {
         switch(row.collectType) {
@@ -363,11 +377,20 @@ export default {
 .tubelist {
   padding: 16px;
 }
+.searchLeft .el-input {
+  width: 300px;
+  float: left;
+}
+.searchLeft .el-button {
+  float: left;
+  margin-left: 10px;
+  margin-top: 3px;
+}
 .btnRight {
   float: right;
 }
 .add_data {
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .pagination {
   float: right;

@@ -3,30 +3,6 @@
     <el-tag>位置 <i class="el-icon-arrow-right"></i> 采集人员列表</el-tag>
     <!-- 查询，添加 -->
     <el-form :inline="true" class="add_data" ref="add_data" :model="search_data">
-      <!-- 筛选 -->
-      <el-form-item lable="按照时间筛选">
-        <el-date-picker
-          v-model="search_data.openTime"
-          type="datetime"
-          placeholder="选择开始时间">
-        </el-date-picker>
-          --
-        <el-date-picker
-          v-model="search_data.closeTime"
-          type="datetime"
-          placeholder="选择结束时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item>
-        <el-button 
-          type="primary" 
-          size="small" 
-          icon="view" 
-          @click="handleSearch()">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" size="small" icon="search" @click="handleSearch()">筛选</el-button>
-      </el-form-item>
       <el-form-item class="btnRight">
         <el-button 
           type="primary" 
@@ -125,9 +101,12 @@
           <el-form-item prop="tel" label="电话">
             <el-input type="text" v-model="addFormData.tel"></el-input>
           </el-form-item>
+          <el-form-item prop="password" label="密码">
+            <el-input type="password" v-model="addFormData.password"></el-input>
+          </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="dialog.show = false">取 消</el-button>
-            <el-button type="text" @click='addOnSubmit()'>提  交</el-button>
+            <el-button type="primary" @click='addOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -153,9 +132,12 @@
           <el-form-item prop="tel" label="电话">
             <el-input type="text" v-model="EditFormData.tel"></el-input>
           </el-form-item>
+          <el-form-item prop="password" label="密码">
+            <el-input type="password" v-model="EditFormData.password"></el-input>
+          </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="editDialog.show = false">取 消</el-button>
-            <el-button type="text" @click='editOnSubmit()'>提  交</el-button>
+            <el-button type="primary" @click='editOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -191,6 +173,7 @@ export default {
         name: '',
         idcard: '',
         tel: '',
+        password: ''
       },
       editDialog: {
         title: '编辑采集人信息',
@@ -201,6 +184,7 @@ export default {
         name: '',
         idcard: '',
         tel: '',
+        password: ''
       }
     }
   },
