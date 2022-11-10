@@ -122,7 +122,6 @@
       :modal-append-to-body="false">
       <div class="form">
         <el-form
-          :rules="rules"
           :model="EditFormData"
           label-width="120px"
           style="margin:10px;width=auto">
@@ -208,18 +207,19 @@ export default {
         },
         {
           min:6,
+          max:30,
           message:'长度最小6位',
           trigger:'blur'
         }],
         idcard:[{
           required:true,
-          message:'身份证不能为空',
+          message:'请输入18位身份证',
           trigger:'blur'
         },
         {
           min:18,
           max:18,
-          message:'请输入18位身份证',
+          message:'身份证长度为18位',
           trigger:'blur'
         }]
       }
