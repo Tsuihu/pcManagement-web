@@ -269,7 +269,7 @@ export default {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           // console.log(res)
           this.editDialog.show = false
-          this.getCollectors()
+          this.getManagers()
         }
       })
     },
