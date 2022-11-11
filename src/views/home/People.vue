@@ -182,7 +182,7 @@
           </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="dialog.show = false">取 消</el-button>
-            <el-button type="text" @click='editOnSubmit()'>提  交</el-button>
+            <el-button type="primary" @click='editOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -315,7 +315,7 @@ export default {
     addOnSubmit() {
       api.post('/people/addPeople.do',this.addFormData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res)
+          // console.log(res)
           this.dialog.show = false
           this.addFormData = {}
           this.getPeopleList()
@@ -330,18 +330,18 @@ export default {
     editOnSubmit() {
       api.post('/people/updatePeopleById.do',this.EditFormData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res)
+          // console.log(res)
           this.editDialog.show = false
         }
       })
     },
     // 删除
     handleDelete(index,row) {
-      console.log(row.peopleId)
+      // console.log(row.peopleId)
       if(confirm('确认删除？')) {
         api.post(`/people/deletePeopleById.do?peopleId=${row.peopleId}`).then(res => {
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            console.log(res)
+            // console.log(res)
             this.getPeopleList()
           }
         }) 

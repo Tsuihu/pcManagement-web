@@ -273,10 +273,11 @@ export default {
     // 搜索
     btnSearch() {
       console.log(this.searchTubeCode)
-      if(this.searchBoxCode) {
-        api.post(`/testtube/getLikeCode.do?TesttubeCode=${this.searchTubeCode}`).then(res => {
+      if(this.searchTubeCode) {
+        api.post(`/testtube/getLikeCode.do?testtubeCode=${this.searchTubeCode}`).then(res => {
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            console.log(res)
+            // console.log(res)
+            this.tableData = res.data
           }
         })
         this.searchTubeCode = ''
@@ -299,7 +300,7 @@ export default {
     addOnSubmit() {
       api.post('/testtube/addTestTube.do',this.addFormData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res)
+          // console.log(res)
           this.dialog.show = false
           this.addFormData = {}
           this.getTubeList()
@@ -324,11 +325,11 @@ export default {
     },
     // 删除
     handleDelete(index,row) {
-      console.log(row.testtubeId)
+      // console.log(row.testtubeId)
       if(confirm('确认删除？')) {
         api.post(`/testtube/deleteTube.do?testtubeId=${row.testtubeId}`).then(res => {
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            console.log(res)
+            // console.log(res)
             this.getTubeList()
           }
         }) 

@@ -122,7 +122,6 @@
             <el-input type="text" v-model="addFormData.boxCode"></el-input>
           </el-form-item>
           <el-form-item prop="name" label="采集人员名字">
-            <!-- <el-input type="text" v-model="addFormData.name"></el-input> -->
             <el-select v-model="addFormData.name"  placeholder="采集人员名字">
               <el-option
                 v-for="(item,index) in collectors"
@@ -134,8 +133,7 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="pointName" label="采集地点">
-            <!-- <el-input type="text" v-model="addFormData.pointName"></el-input> -->
-            <el-select v-model="pointList.pointName"  placeholder="采集地点">
+            <el-select v-model="addFormData.pointName"  placeholder="采集地点">
               <el-option
                 v-for="(item,index) in pointList"
                 :key="index" 
@@ -168,12 +166,15 @@
             <el-input type="text" v-model="EditFormData.boxCode"></el-input>
           </el-form-item>
           <el-form-item prop="name" label="采集人员名字">
-            <el-input type="text" v-model="EditFormData.name"></el-input>
-            <!-- <el-select v-model="addFormData.name" placeholder="试管类型">
-              <el-option label="1" value="1">单采</el-option>
-              <el-option label="10" value="10">10人混采</el-option>
-              <el-option label="20" value="20">20人混采</el-option>
-            </el-select> -->
+            <el-select v-model="EditFormData.name"  placeholder="采集人员名字">
+              <el-option
+                v-for="(item,index) in collectors"
+                :key="index" 
+                :label="item.name" 
+                :value="item.name">
+                  {{item.name}}
+                </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item prop="status" label="转运箱状态">
             <el-select v-model="EditFormData.status" placeholder="试管状态">
@@ -182,11 +183,19 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="pointName" label="采集地点">
-            <el-input type="text" v-model="EditFormData.pointName"></el-input>
+            <el-select v-model="EditFormData.pointName"  placeholder="采集地点">
+              <el-option
+                v-for="(item,index) in pointList"
+                :key="index" 
+                :label="item.pointName" 
+                :value="item.pointName">
+                  {{item.pointName}}
+                </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item  class="text_right">
             <el-button @click="dialog.show = false">取 消</el-button>
-            <el-button type="text" @click='editOnSubmit()'>提  交</el-button>
+            <el-button type="primary" @click='editOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -262,7 +271,7 @@ export default {
         api.post(`/box/getLikeCode.do?boxCode=${this.searchBoxCode}`).then(res => {
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
             this.tableData = res.data
-            console.log(res)
+            // console.log(res)
           }
         })
         this.searchBoxCode = ''
@@ -275,13 +284,13 @@ export default {
       this.dialog.show = true
       api.post('/point/getAllPointName.do').then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res.data)
+          // console.log(res.data)
           this.pointList = res.data
         }
       })
       api.post('/collector/getAllName.do').then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res.data)
+          // console.log(res.data)
           this.collectors = res.data
         }
       })
@@ -289,7 +298,7 @@ export default {
     addOnSubmit() {
       api.post('/box/addBox.do',this.addFormData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res)
+          // console.log(res)
           this.dialog.show = false
           this.addFormData = {}
           // this.getBoxList()
@@ -298,14 +307,27 @@ export default {
     },
     // 编辑
     handleEdit(index,row) {
-      console.log(row)
+      // console.log(row)
       this.EditFormData = row
       this.editDialog.show = true
+      api.post('/point/getAllPointName.do').then(res => {
+        if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+          // console.log(res.data)
+          this.pointList = res.data
+        }
+      })
+      api.post('/collector/getAllName.do').then(res => {
+        if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+          // console.log(res.data)
+          this.collectors = res.data
+        }
+      })
     },
     editOnSubmit() {
+      // console.log(this.EditFormData)
       api.post('/box/updateBox.do',this.EditFormData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res)
+          // console.log(res)
           this.editDialog.show = false
         }
       })
@@ -315,7 +337,7 @@ export default {
       if(confirm('确认删除？')) {
         api.post(`/box/deleteBox.do?boxId=${row.boxId}`).then(res => {
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            console.log(res)
+            // console.log(res)
             this.getBoxList()
           }
         }) 

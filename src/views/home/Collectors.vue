@@ -263,7 +263,7 @@ export default {
     },
     // 编辑dialog
     editOnSubmit() {
-      console.log(this.EditFormData)
+      // console.log(this.EditFormData)
       api.post('/collector/updateCollector.do',this.EditFormData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           // console.log(res)
@@ -277,7 +277,7 @@ export default {
       if(confirm('确认删除？')) {
         api.post(`/collector/deleteCollector.do?collectorId=${row.collectorId}`).then(res => {
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            console.log(res)
+            // console.log(res)
             this.getCollectors()
           }
         }) 

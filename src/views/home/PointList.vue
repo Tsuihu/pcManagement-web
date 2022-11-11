@@ -135,11 +135,13 @@ export default {
     },
     // 删除
     handleDelete(index,row) {
-      api.post(`/point/deletePoint.do?pointId=${row.pointId}`).then(res => {
-        if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          this.getAllPoint()
-        }
-      })
+      if(confirm('确认删除？')) {
+        api.post(`/point/deletePoint.do?pointId=${row.pointId}`).then(res => {
+          if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+            this.getAllPoint()
+          }
+        })
+      }
     },
     // 设置一页展示多少条数据
     handleSizeChange(pageSize) {

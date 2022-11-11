@@ -35,7 +35,7 @@ export default {
       const url = this.dialog.option == 'addPoint.do' ? 'addPoint.do' : `updatePoint.do`
       api.post(`/point/${url}`,this.formData).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          console.log(res)
+          // console.log(res)
           this.$emit('update')
           this.dialog.show = false
         }

@@ -120,8 +120,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           api.post('/manager/registe.do',this.registerUser).then(res => {
-            console.log(res)
-            this.$router.push('/login')
+            // console.log(res)
+            console.log(this.$comm.RESULT_CODE.SUCCESS)
+            if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+              this.$router.push('/login')
+            }
           })
         }
       });

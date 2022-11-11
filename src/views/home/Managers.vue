@@ -235,7 +235,7 @@ export default {
       api.post('/manager/getPage.do',pages).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           this.tableData = res.data.data
-          console.log(res)
+          // console.log(res)
           this.paginations.total = res.data.count
         }
       })
@@ -278,7 +278,7 @@ export default {
       if(confirm('确认删除？')) {
         api.post(`/manager/deleteManager.do?managerId=${row.managerId}`).then(res => {
           if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-            console.log(res)
+            // console.log(res)
             this.getManagers()
           }
         }) 
