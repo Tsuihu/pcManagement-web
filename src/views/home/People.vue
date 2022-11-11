@@ -8,7 +8,7 @@
         <el-input
           placeholder="请输入人员姓名"
           prefix-icon="el-icon-search"
-          v-model="searchPeople"
+          v-model="searchPeople.name"
           @keydown.enter="btnSearch()">
         </el-input>
         <el-button 
@@ -211,7 +211,9 @@ export default {
   name: 'people',
   data() {
     return {
-      searchPeople: '',
+      searchPeople: {
+        name: ''
+      },
       tableData: [],
       allTableData: [],
       paginations: {
@@ -300,12 +302,12 @@ export default {
     btnSearch() {
       console.log(this.searchPeople)
       if(this.searchPeople) {
-        // api.post(`/box/getLikeCode.do?boxCode=${this.searchPeople}`).then(res => {
-        //   if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-        //     this.tableData = res.data
-        //     // console.log(res)
-        //   }
-        // })
+        api.post(`/people/getLikeNameIdCard.do`,this.searchPeople).then(res => {
+          if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
+            this.tableData = res.data
+            console.log(res)
+          }
+        })
         this.searchPeople = ''
       }else {
         this.$message('请输入姓名')
@@ -379,9 +381,6 @@ export default {
       })
       this.resultDialog.show = true
     },
-    closeResult() {
-      console.log('$##')
-    }
   },
   watch: {
     'resultDialog.show': {
