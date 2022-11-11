@@ -171,7 +171,7 @@
             <el-input type="text" v-model="EditFormData.tel"></el-input>
           </el-form-item>
           <el-form-item  class="text_right">
-            <el-button @click="dialog.show = false">取 消</el-button>
+            <el-button @click="editDialog.show = false">取 消</el-button>
             <el-button type="primary" @click='editOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
@@ -374,11 +374,20 @@ export default {
     handleResult(index,row) {
       api.post(`/sample/getResultByPeopleId.do?peopleId=${row.peopleId}`).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          // console.log(res.data[0])
           this.resultFormData = res.data[0]
         }
       })
       this.resultDialog.show = true
+    },
+    closeResult() {
+      console.log('$##')
+    }
+  },
+  watch: {
+    'resultDialog.show': {
+      handler() {
+        this.resultFormData = {}
+      }
     }
   },
   created() {
