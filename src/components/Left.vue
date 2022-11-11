@@ -7,7 +7,7 @@
         text-color="#303133">
         <router-link to="/home">
           <el-menu-item index="0">
-            <i class="fa fa-th-large"></i>
+            <i class="fa fa-bars"></i>
             <span>首页</span>
           </el-menu-item>
         </router-link>
@@ -31,7 +31,7 @@
         </router-link>
         <router-link to="/boxlist">
           <el-menu-item index="4">
-            <i class="fa fa-bar-chart"></i>
+            <i class="fa fa-inbox"></i>
             <span>转运箱管理</span>
           </el-menu-item>
         </router-link>
@@ -41,25 +41,21 @@
             <span>人员信息</span>
           </el-menu-item>
         </router-link>
-
-          <!-- <el-menu-item index="6">
-            <i class="fa fa-user-circle-o"></i>
-            <span>系统用户</span>
-          </el-menu-item> -->
-
         <template>
           <el-submenu index="6">
             <template #title>
-              <i class="fa fa-address-card"></i>
+              <i class="fa fa-user-circle-o"></i>
               <span slot="title">系统用户</span>
             </template>
             <router-link to="/collectors">
               <el-menu-item index="6-1">
+                <i class="fa fa-angle-right"></i>
                 <span slot="title">采集人员</span>
               </el-menu-item>
             </router-link>
             <router-link to="/managers">
               <el-menu-item index="6-2">
+                <i class="fa fa-angle-right"></i>
                 <span slot="title">管理员</span>
               </el-menu-item>
             </router-link>
