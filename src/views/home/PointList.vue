@@ -123,6 +123,7 @@ export default {
         show: true,
         option: 'addPoint.do'
       }
+      this.formData = {}
     },
     // 编辑
     handleEdit(index,row) {
@@ -131,7 +132,7 @@ export default {
         show: true,
         option: 'updatePoint.do'
       },
-      this.formData.pointId = row.pointId
+      this.formData = row
     },
     // 删除
     handleDelete(index,row) {
