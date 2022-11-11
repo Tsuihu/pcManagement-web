@@ -193,8 +193,10 @@
             {{resultFormData.testtubeCode}}
           </el-form-item>
           <el-form-item prop="testResult" label="核算结果">
-            <el-tag v-if="resultFormData.testResult == 0" size="small">阴性</el-tag>
+            <div v-if="code == 200">
+              <el-tag v-if="resultFormData.testResult == 0" size="small">阴性</el-tag>
               <el-tag v-if="resultFormData.testResult != 0" type="warning"  size="small">阳性</el-tag>
+            </div>
           </el-form-item>
           <el-form-item prop="collectTime" label="采集时间">
             {{resultFormData.collectTime}}
@@ -250,10 +252,11 @@ export default {
         show: false,
         option: ''
       },
+      code: '',
       resultFormData: {
         testtubeCode: '',
         testResult: '',
-        testResult: ''
+        collectTime: ''
       },
       rules:{
         tel:[{
@@ -377,6 +380,11 @@ export default {
       api.post(`/sample/getResultByPeopleId.do?peopleId=${row.peopleId}`).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           this.resultFormData = res.data[0]
+          this.code = res.code
+          console.log(res)
+        }else {
+          console.log(res)
+          this.code = res.code
         }
       })
       this.resultDialog.show = true
