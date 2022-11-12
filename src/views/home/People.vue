@@ -179,30 +179,33 @@
     </el-dialog>
     <!-- 结果 -->
     <el-dialog
+      class="dialog"
       :title="resultDialog.title"
       :visible.sync="resultDialog.show"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       :modal-append-to-body="false">
-      <div class="form">
-        <el-form
-          :model="resultFormData"
-          label-width="120px"
-          style="margin:10px;width=auto">
-          <el-form-item prop="testtubeCode" label="所对应试管编码">
-            {{resultFormData.testtubeCode}}
-          </el-form-item>
-          <el-form-item prop="testResult" label="核算结果">
-            <div v-if="code == 200">
-              <el-tag v-if="resultFormData.testResult == 0" size="small">阴性</el-tag>
-              <el-tag v-if="resultFormData.testResult != 0" type="warning"  size="small">阳性</el-tag>
-            </div>
-          </el-form-item>
-          <el-form-item prop="collectTime" label="采集时间">
-            {{resultFormData.collectTime}}
-          </el-form-item>
-        </el-form>
-      </div>
+        <h1 v-if="code == 500">未采集</h1>
+        <table v-if="code == 200" class="resultTable">
+          <tr>
+            <th>所对应试管编码</th>
+            <th>核算结果</th>
+            <th>采集时间</th>
+          </tr>
+          <tr v-for="(item,index) in resultFormData" :key="index">
+            <td>{{item.testtubeCode}}</td>
+            <td>
+              <!-- {{item.testResult}} -->
+              <el-tag v-if="item.testResult == 0" size="small">
+                阴性
+              </el-tag>
+              <el-tag v-if="item.testResult != 0" type="warning"  size="small">
+                阳性
+              </el-tag>
+            </td>
+            <td>{{item.collectTime}}</td>
+          </tr>
+        </table>
     </el-dialog>
   </div>
 </template>
@@ -253,11 +256,7 @@ export default {
         option: ''
       },
       code: '',
-      resultFormData: {
-        testtubeCode: '',
-        testResult: '',
-        collectTime: ''
-      },
+      resultFormData: [],
       rules:{
         tel:[{
           required:true,
@@ -379,8 +378,8 @@ export default {
     handleResult(index,row) {
       api.post(`/sample/getResultByPeopleId.do?peopleId=${row.peopleId}`).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          this.resultFormData = res.data[0]
           this.code = res.code
+          this.resultFormData = res.data
           console.log(res)
         }else {
           console.log(res)
@@ -425,5 +424,16 @@ export default {
 }
 .pagination {
   float: right;
+}
+.resultTable {
+  /* border: 1px solid #ddd; */
+  width: 580px;
+  height: 130px;
+  padding: 10px;
+  text-align: center;
+  border-collapse: collapse;
+}
+.resultTable th,td {
+  border-bottom: 1px solid #ddd;
 }
 </style>
