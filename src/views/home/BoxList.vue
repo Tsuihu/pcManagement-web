@@ -195,7 +195,7 @@
             </el-select>
           </el-form-item>
           <el-form-item  class="text_right">
-            <el-button @click="dialog.show = false">取 消</el-button>
+            <el-button @click="editDialog.show = false">取 消</el-button>
             <el-button type="primary" @click='editOnSubmit()'>提  交</el-button>
           </el-form-item>
         </el-form>
