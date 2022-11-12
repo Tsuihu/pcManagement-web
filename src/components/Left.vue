@@ -23,16 +23,16 @@
             <span>核算结果</span>
           </el-menu-item>
         </router-link> -->
-        <router-link to="/tubelist">
-          <el-menu-item index="3">
-            <i class="fa fa-bar-chart"></i>
-            <span>试管管理</span>
-          </el-menu-item>
-        </router-link>
         <router-link to="/boxlist">
           <el-menu-item index="4">
             <i class="fa fa-inbox"></i>
             <span>转运箱管理</span>
+          </el-menu-item>
+        </router-link>
+        <router-link to="/tubelist">
+          <el-menu-item index="3">
+            <i class="fa fa-bar-chart"></i>
+            <span>试管管理</span>
           </el-menu-item>
         </router-link>
         <router-link to="/people">

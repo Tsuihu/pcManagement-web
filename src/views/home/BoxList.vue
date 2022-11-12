@@ -47,9 +47,10 @@
           width="100"
           align="center">
           <template slot-scope="scope">
-            <el-tag size="small">
+            <!-- <el-tag size="small">
               {{scope.row.status == 0 ? '已开箱' : '已封箱'}}
-            </el-tag>
+            </el-tag> -->
+            {{scope.row.status == 0 ? '已开箱√' : '已封箱×'}}
           </template>
         </el-table-column>
         <el-table-column
