@@ -256,6 +256,7 @@ export default {
         option: ''
       },
       code: '',
+      isShow: true,
       resultFormData: [],
       rules:{
         tel:[{
@@ -380,9 +381,7 @@ export default {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
           this.code = res.code
           this.resultFormData = res.data
-          console.log(res)
         }else {
-          console.log(res)
           this.code = res.code
         }
       })
