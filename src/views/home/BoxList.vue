@@ -291,7 +291,7 @@ export default {
       })
       api.post('/collector/getAllName.do').then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          // console.log(res.data)
+          console.log(res.data)
           this.collectors = res.data
         }
       })
@@ -302,7 +302,7 @@ export default {
           // console.log(res)
           this.dialog.show = false
           this.addFormData = {}
-          // this.getBoxList()
+          this.getBoxList()
         }
       })
     },
