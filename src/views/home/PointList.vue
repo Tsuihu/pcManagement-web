@@ -185,7 +185,7 @@ export default {
     },
   },
   created() {
-    this.setPaginations()
+    // this.setPaginations()
     this.getAllPoint()
   }
 }

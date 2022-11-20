@@ -256,8 +256,6 @@ export default {
       }
       api.post('/box/getPageBox.do',pages).then(res => {
         if(res.code == this.$comm.RESULT_CODE.SUCCESS) {
-          // this.tableData = res.data.data
-          // this.paginations.total = res.data.count
           // console.log(res)
           this.allTableData = res.data.data
           this.paginations.total = res.data.count
